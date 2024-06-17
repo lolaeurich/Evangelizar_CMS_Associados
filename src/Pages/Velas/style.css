@@ -49,6 +49,8 @@ html, body {
 
 .velas-grafico-pizza {
     display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     width: 40%;
     height: 300px;
     box-shadow: 0 4px 25px #00000042;
@@ -63,7 +65,16 @@ html, body {
 
 .velas-excel {
     display: flex;
+    flex-direction: column;
     width: 87%;
     height: 400px;
     box-shadow: 0 4px 25px #00000042;
+    overflow: auto; /* Adicionando overflow para permitir rolagem */
+    padding-top: 15px;
+    padding-inline: 15px;
+  }
+
+  .tabela-velas-h2 {
+    font-size: 22px;
+    padding-left: 15px;    
 }

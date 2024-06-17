@@ -6,7 +6,7 @@ import ChartComponent from "../../components/Charts/VelasChart";
 import ChartVelasPorMes from "../../components/Charts/VelasPorMesChart";
 import TabelaVelas from "../../components/Tables/TableVelas";
 
-function Velas () {
+function Testemunhos () {
     return (
         <div>
             <Nav />
@@ -36,4 +36,4 @@ function Velas () {
     )
 }
 
-export default Velas;
+export default Testemunhos;

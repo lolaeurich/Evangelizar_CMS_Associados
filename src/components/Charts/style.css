@@ -1,0 +1,35 @@
+.status-velas {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    height: 90%;
+    width: 100%;
+}
+
+.status-velas-h2 {
+    font-size: 24px;
+}
+
+.pie-velas {
+   display: flex;
+
+}
+
+.velas-por-mes {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    height: 90%;
+    width: 100%;
+}
+
+.velas-por-mes-h2 {
+    font-size: 24px;
+}
+
+.bar-velas {
+    display: flex !important;
+    width: 370px !important;
+}

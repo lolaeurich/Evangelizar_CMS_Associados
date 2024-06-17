@@ -1,0 +1,21 @@
+/*MAIN*/
+
+.add-jornal {
+    width: 100vw; /* Largura de 100% da viewport */
+    height: 95vh; /* Altura de 100% da viewport */
+    background-color: #fff;
+    width: 100vw; /* Largura de 100% da viewport */
+    height: 95vh; /* Altura de 100% da viewport */
+    background-color: #fff;
+}
+
+.jornal-container {
+    width: 100vw; /* Largura de 100% da viewport */
+    height: 90vh; /* Altura de 100% da viewport */
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 25px;
+}
