@@ -80,8 +80,8 @@ const ChartComponent = () => {
   // Renderiza o componente Pie com os dados dinâmicos
   return (
     <div className='status-velas'>
-      <h2 className='status-velas-h2'>Status de Velas</h2>
-      <Pie data={chartData} options={chartData.options} />
+      <Pie data={chartData} options={chartData.options} style={{    height: "328px",
+    width: "304px"}}/>
     </div>
   );
 };

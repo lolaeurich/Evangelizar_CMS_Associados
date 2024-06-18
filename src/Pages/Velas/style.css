@@ -47,20 +47,24 @@ html, body {
     height: 38%;
 }
 
-.velas-grafico-pizza {
+.filtro-grafico-pizza {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 40%;
-    height: 300px;
-    box-shadow: 0 4px 25px #00000042;
 }
 
-.velas-grafico-mes {
+.velas-grafico-pizza {
     display: flex;
-    width: 40%;
-    height: 300px;
+    justify-content: space-around;
+    width: 87%;
+    height: 326px;
     box-shadow: 0 4px 25px #00000042;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
+
+}
+
+.velas-h2 {
+    padding: 20px;
 }
 
 .velas-excel {
@@ -76,5 +80,9 @@ html, body {
 
   .tabela-velas-h2 {
     font-size: 22px;
-    padding-left: 15px;    
+    padding: 20px;    
+}
+
+.input-novo {
+    height: 22px !important;
 }

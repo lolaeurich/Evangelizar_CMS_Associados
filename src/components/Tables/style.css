@@ -23,7 +23,7 @@
 }
 
 .table td {
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .table tbody tr:nth-child(even) {
@@ -51,8 +51,10 @@
 
 .filtros {
   display: flex;
+  flex-direction: column;
   height: 25px;
   margin-bottom: 15px;
   margin-top: 15px;
   column-gap: 15px;
+  row-gap: 10px;
 }

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import JSZip from "jszip";
 import axios from "axios";
+import Nav from "../../components/Nav/Nav";
+import Rodape from "../../components/Rodape/Rodape";
+import "./style.css"
 
 const API_URL = "https://arearestritaevangelizar.belogic.com.br/api";
 
@@ -9,7 +11,7 @@ const AddJornal = () => {
   const [edicao, setEdicao] = useState("");
   const [dataPublicacao, setDataPublicacao] = useState("");
   const [imagemCapa, setImagemCapa] = useState(null);
-  const [arquivoImagens, setArquivoImagens] = useState([]);
+  const [arquivoImagens, setArquivoImagens] = useState(null);
   const [edicaoGratuita, setEdicaoGratuita] = useState(false);
 
   const handleImagemCapaChange = (e) => {
@@ -18,27 +20,9 @@ const AddJornal = () => {
 
   const handleArquivoImagensChange = async (e) => {
     const file = e.target.files[0];
-    const zip = new JSZip();
 
     try {
-      await zip.loadAsync(file);
-
-      const fileNames = Object.keys(zip.files);
-      const imagens = [];
-
-      await Promise.all(
-        fileNames.map(async (fileName) => {
-          const zipEntry = zip.files[fileName];
-          if (zipEntry.dir === false && fileName.match(/\.(jpg|jpeg|png)$/i)) {
-            const fileBlob = await zip.file(fileName).async("blob");
-            const imageUrl = URL.createObjectURL(fileBlob); // URL temporária para a imagem
-            imagens.push(imageUrl); // Adiciona a URL ao array de imagens
-            console.log("Imagem extraída:", fileName);
-          }
-        })
-      );
-
-      setArquivoImagens(imagens); // Atualiza o estado com as URLs das imagens
+      setArquivoImagens(file); // Atualiza o estado com as URLs das imagens
     } catch (error) {
       console.error("Erro ao processar arquivo ZIP:", error);
     }
@@ -52,12 +36,8 @@ const AddJornal = () => {
     formData.append("edicao", edicao);
     formData.append("data_publicacao", dataPublicacao);
     formData.append("imagem_capa", imagemCapa);
+    formData.append("arquivo", arquivoImagens);
     formData.append("edicao_gratuita_id", edicaoGratuita ? "true" : "false");
-
-    // Adiciona URLs das imagens do ZIP ao FormData
-    arquivoImagens.forEach((imageUrl, index) => {
-      formData.append(`imagens[${index}]`, imageUrl);
-    });
 
     try {
       const response = await axios.post(`${API_URL}/jornal`, formData, {
@@ -74,7 +54,7 @@ const AddJornal = () => {
       setEdicao("");
       setDataPublicacao("");
       setImagemCapa(null);
-      setArquivoImagens([]);
+      setArquivoImagens(null);
       setEdicaoGratuita(false);
 
       alert("Jornal enviado com sucesso!");
@@ -90,9 +70,11 @@ const AddJornal = () => {
 
   return (
     <div>
-      <h2>Enviar Jornal</h2>
+    <Nav />
+    <div className="jornal-main">
+      <h2 className="jornal-h2">Enviar Jornal</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="inputs-jornal">
           <label htmlFor="lancamento">Lançamento:</label>
           <input
             type="text"
@@ -102,7 +84,7 @@ const AddJornal = () => {
             required
           />
         </div>
-        <div>
+        <div className="inputs-jornal">
           <label htmlFor="edicao">Edição:</label>
           <input
             type="text"
@@ -112,7 +94,7 @@ const AddJornal = () => {
             required
           />
         </div>
-        <div>
+        <div className="inputs-jornal">
           <label htmlFor="dataPublicacao">Data de Publicação:</label>
           <input
             type="text"
@@ -122,28 +104,26 @@ const AddJornal = () => {
             required
           />
         </div>
-        <div>
+        <div className="inputs-jornal">
           <label htmlFor="imagemCapa">Imagem de Capa:</label>
           <input
             type="file"
             id="imagemCapa"
             onChange={handleImagemCapaChange}
             accept="image/jpeg,image/png"
-            required
           />
         </div>
-        <div>
+        <div className="inputs-jornal">
           <label htmlFor="arquivoImagens">Arquivo de Imagens (ZIP):</label>
           <input
             type="file"
             id="arquivoImagens"
             onChange={handleArquivoImagensChange}
             accept=".zip"
-            required
           />
         </div>
         <div>
-          <label htmlFor="edicaoGratuita">Edição Gratuita:</label>
+          <label htmlFor="edicaoGratuita">Edição Gratuita (marque esse campo apenas se a afirmação for positiva): </label>
           <input
             type="checkbox"
             id="edicaoGratuita"
@@ -151,8 +131,10 @@ const AddJornal = () => {
             onChange={(e) => setEdicaoGratuita(e.target.checked)}
           />
         </div>
-        <button type="submit">Enviar Jornal</button>
+        <button className="jornal-btn" type="submit">Enviar Jornal</button>
       </form>
+    </div>
+    <Rodape />
     </div>
   );
 };

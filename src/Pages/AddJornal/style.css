@@ -1,5 +1,16 @@
 /*MAIN*/
 
+.jornal-main {
+    width: 100vw; /* Largura de 100% da viewport */
+    height: 90vh; /* Altura de 100% da viewport */
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 25px;
+}
+
 .add-jornal {
     width: 100vw; /* Largura de 100% da viewport */
     height: 95vh; /* Altura de 100% da viewport */
@@ -7,6 +18,8 @@
     width: 100vw; /* Largura de 100% da viewport */
     height: 95vh; /* Altura de 100% da viewport */
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
 .jornal-container {
@@ -18,4 +31,30 @@
     justify-content: center;
     align-items: center;
     row-gap: 25px;
+}
+
+.jornal-h2 {
+    font-size: 32px;
+    color: #38603D;
+}
+
+.inputs-jornal {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.inputs-jornal input {
+    height: 32px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.inputs-jornal label {
+   font-size: 18px;
+}
+
+.jornal-btn {
+    border: 1px solid #38603D;
+    margin-top: 10px;
 }

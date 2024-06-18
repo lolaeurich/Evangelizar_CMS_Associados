@@ -82,20 +82,6 @@ const TabelaVelas = () => {
   return (
     <div className='velas-excel'>
       <h2 className='tabela-velas-h2'>Lista de Velas</h2>
-      <div className='filtros'>
-        <input
-          type="text"
-          placeholder="Filtrar por título"
-          onChange={(e) => handleFilterChange({ campo: 'titulo', valor: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Filtrar por motivo"
-          onChange={(e) => handleFilterChange({ campo: 'motivo', valor: e.target.value })}
-        />
-        <CitiesDropdown onSelectCity={handleCityFilterChange} />
-        <button onClick={clearFilters} style={{height: "33px", border:"solid 1px #000", textAlign: "center"}}>Limpar Filtros</button>
-      </div>
       <div className='tabela-scroll'>
         <table className='table'>
           <thead>
