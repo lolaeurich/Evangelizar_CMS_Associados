@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import JSZip from "jszip";
 import axios from "axios";
 
+const API_URL = "https://arearestritaevangelizar.belogic.com.br/api";
+
 const AddJornal = () => {
   const [lancamento, setLancamento] = useState("");
   const [edicao, setEdicao] = useState("");
   const [dataPublicacao, setDataPublicacao] = useState("");
   const [imagemCapa, setImagemCapa] = useState(null);
-  const [arquivoImagens, setArquivoImagens] = useState(null);
+  const [arquivoImagens, setArquivoImagens] = useState([]);
   const [edicaoGratuita, setEdicaoGratuita] = useState(false);
-  const [imagensDoZip, setImagensDoZip] = useState([]);
 
   const handleImagemCapaChange = (e) => {
     setImagemCapa(e.target.files[0]);
@@ -17,28 +18,30 @@ const AddJornal = () => {
 
   const handleArquivoImagensChange = async (e) => {
     const file = e.target.files[0];
-    setArquivoImagens(file);
-
     const zip = new JSZip();
-    await zip.loadAsync(file);
 
-    const imagens = [];
+    try {
+      await zip.loadAsync(file);
 
-    // Convert zip.files to an array of keys (file names)
-    const fileNames = Object.keys(zip.files);
+      const fileNames = Object.keys(zip.files);
+      const imagens = [];
 
-    await Promise.all(
-      fileNames.map(async (fileName) => {
-        const zipEntry = zip.files[fileName];
-        if (zipEntry.dir === false && fileName.match(/\.(jpg|jpeg|png)$/i)) {
-          const fileBlob = await zip.file(fileName).async("blob");
-          imagens.push({ nome: fileName, arquivo: fileBlob });
-        }
-      })
-    );
+      await Promise.all(
+        fileNames.map(async (fileName) => {
+          const zipEntry = zip.files[fileName];
+          if (zipEntry.dir === false && fileName.match(/\.(jpg|jpeg|png)$/i)) {
+            const fileBlob = await zip.file(fileName).async("blob");
+            const imageUrl = URL.createObjectURL(fileBlob); // URL temporária para a imagem
+            imagens.push(imageUrl); // Adiciona a URL ao array de imagens
+            console.log("Imagem extraída:", fileName);
+          }
+        })
+      );
 
-    console.log("Imagens extraídas do ZIP:", imagens);
-    setImagensDoZip(imagens);
+      setArquivoImagens(imagens); // Atualiza o estado com as URLs das imagens
+    } catch (error) {
+      console.error("Erro ao processar arquivo ZIP:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -49,37 +52,30 @@ const AddJornal = () => {
     formData.append("edicao", edicao);
     formData.append("data_publicacao", dataPublicacao);
     formData.append("imagem_capa", imagemCapa);
-
-    // Adicionar edicao_gratuita_id baseado na seleção do checkbox
     formData.append("edicao_gratuita_id", edicaoGratuita ? "true" : "false");
 
-    // Adicionar imagens do ZIP ao FormData
-    imagensDoZip.forEach((imagem, index) => {
-      formData.append(`imagens[${index}]`, imagem.arquivo, imagem.nome);
+    // Adiciona URLs das imagens do ZIP ao FormData
+    arquivoImagens.forEach((imageUrl, index) => {
+      formData.append(`imagens[${index}]`, imageUrl);
     });
 
     try {
-      const response = await axios.post(
-        "https://arearestritaevangelizar.belogic.com.br/api/jornal",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.post(`${API_URL}/jornal`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       console.log("Resposta da API:", response.data);
 
-      // Limpar os campos após o envio bem-sucedido, se necessário
+      // Limpa os campos após o envio bem-sucedido
       setLancamento("");
       setEdicao("");
       setDataPublicacao("");
       setImagemCapa(null);
-      setArquivoImagens(null);
+      setArquivoImagens([]);
       setEdicaoGratuita(false);
-      setImagensDoZip([]);
 
       alert("Jornal enviado com sucesso!");
 
@@ -88,7 +84,6 @@ const AddJornal = () => {
       if (error.response) {
         console.error("Detalhes do erro:", error.response.data);
       }
-      // Trate o erro conforme necessário
       alert("Erro ao enviar jornal. Verifique os detalhes no console.");
     }
   };
