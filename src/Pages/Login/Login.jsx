@@ -1,89 +1,76 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import "./style.css"
-import logo from "../../assets/logo.png"
+// import { useHistory } from 'react-router-dom'; // Importe o useHistory
+import Rodape from '../../components/Rodape/Rodape';
+import logo from "../../assets/logo.png";
+import "./style.css";
 
 import { useNavigate } from "react-router-dom";
-import Rodape from '../../components/Rodape/Rodape';
 
 function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(null); // Estado para controlar o erro
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  // const history = useHistory(); // Obtenha a instância do useHistory
 
-  const handleLogin = async () => {
-    try {
-      const payload = {
-        email,
-        password,
-        associado: true
-      }
+  // const handleLogin = async () => {
+  //   try {
+  //     // Verifique se o e-mail e senha correspondem aos dados fixos
+  //     if (email === "nucleodigital2@evangelizarepreciso.com.br" && password === "Evangelizar@2024") {
+  //       const payload = {
+  //         email,
+  //         password,
+  //         associado: false // De acordo com o exemplo, associado deve ser false
+  //       };
 
-      const response = await axios.post('https://arearestritaevangelizar.belogic.com.br/api/login', payload)
-      const { token } = response.data.authorization 
+  //       // Simula a requisição para a API com dados estáticos
+  //       const response = { data: { authorization: { token: "seu-token-de-exemplo" } } };
 
-      //todo: armazenar token.
-      localStorage.clear()
-      localStorage.setItem('token', token)
+  //       //todo: armazenar token.
+  //       localStorage.clear();
+  //       localStorage.setItem('token', response.data.authorization.token);
 
-      setEmail("")
-      setPassword("")
+  //       setEmail("");
+  //       setPassword("");
 
-      navigate("/areaLogada")
-    } catch (error) {
-      setError("Login ou senha incorretos!"); // Define a mensagem de erro
-    }
+  //       // Navegue para a página de área logada
+  //       history.push("/AreaLogada");
+  //     } else {
+  //       setError("Login ou senha incorretos!"); // Define a mensagem de erro
+  //     }
+  //   } catch (error) {
+  //     console.error("Erro ao fazer login:", error);
+  //     setError("Erro ao fazer login. Verifique os detalhes no console.");
+  //   }
+  // };
+
+  let navigateLog = useNavigate(); 
+  const routeChangeLog = () =>{ 
+    let path = `/AreaLogada`; 
+    navigateLog(path);
   }
-
-  const navigate = useNavigate(); 
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const navigateToPage = (page) => {
-    // Implemente a navegação para a página desejada aqui
-    console.log("Navegar para:", page);
-  };
 
   return (
     <div>
-
-      {/*MAIN*/}
-
-       {/* Se houver um erro, exibe a popup */}
-       {/* {error && (
-        <div className="popup-home">
-          <p>{error}</p>
-          <button onClick={() => setError(null)}>Fechar</button>
-        </div>
-      )} */}
-
-       <div className='main'>
+      {/* Formulário de login */}
+      <div className='main'>
         <div className='login'>
-            <img alt='' className='login-logo' src={logo} />
-            <div className='inputs'>
-              <label className='label-login'>E-mail</label>
-              <input className='input-login' type='email' name="email" onChange={(e) => setEmail(e.target.value)}/>
-              <label className='label-login'>Senha</label>
-              <div className='input-container'>
-                <input className='input-login' type={showPassword ? 'text' : 'password'} value={password} name="senha" onChange={(e) => setPassword(e.target.value)}/>
-                {/* <img   className="eye-icon"
-                alt="Toggle Password Visibility"
-                onClick={togglePasswordVisibility} /> */}
-              </div>
-            </div>
-            <button className="btn-login" onClick={handleLogin}>
-                <span>Entrar</span>
-                <img className="arrow2" alt="" />
-            </button>
-        </div>    
+          <img alt='' className='login-logo' src={logo} />
+          <div className='inputs'>
+            <label className='label-login'>E-mail</label>
+            <input className='input-login' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <label className='label-login'>Senha</label>
+            <input className='input-login' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <button className="btn-login" onClick={routeChangeLog}>
+            <span>Entrar</span>
+            <img className="arrow2" alt="" />
+          </button>
+        </div>
       </div>
 
+      {/* Rodapé */}
       <Rodape />
-
     </div>
   );
 }
