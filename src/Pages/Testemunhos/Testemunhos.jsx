@@ -5,6 +5,7 @@ import Rodape from "../../components/Rodape/Rodape";
 import TabelaVelas from "../../components/Tables/TableVelas";
 import ChartComponentTest from "../../components/Charts/TestemunhosChart.jsx";
 import CitiesDropdown from "../../components/Cities/CitiesDropdown"; // Importe o componente CitiesDropdown aqui
+import TabelaTestemunhos from '../../components/Tables/TableTestemunhos.jsx';
 
 function Testemunhos() {
     const [filtros, setFiltros] = useState([]);
@@ -139,7 +140,7 @@ function Testemunhos() {
                 </div>
 
                 {/* EXCEL */}
-                <TabelaVelas data={dadosFiltrados} />
+                <TabelaTestemunhos data={dadosFiltrados} />
 
             </div>
             <Rodape />
