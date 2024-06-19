@@ -14,6 +14,12 @@ function AreaLogada () {
       navigateVela(path);
     }
 
+    let navigateTest = useNavigate(); 
+    const routeChangeTest = () =>{ 
+      let path = `/Testemunhos`; 
+      navigateTest(path);
+    }
+
     let navigateJornal = useNavigate(); 
     const routeChangeJornal = () =>{ 
       let path = `/Jornais`; 
@@ -35,7 +41,7 @@ function AreaLogada () {
                     <div className="opcao" onClick={routeChangeVelas}>
                         <h4>Velas</h4>
                     </div>
-                    <div className="opcao">
+                    <div className="opcao" onClick={routeChangeTest}>
                         <h4>Testemunhos</h4>
                     </div>
                     <div className="opcao" onClick={routeChangeRevista}>

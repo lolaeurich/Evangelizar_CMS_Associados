@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import Nav from "../../components/Nav/Nav";
 import Rodape from "../../components/Rodape/Rodape";
-import "./style.css"
+import DatePicker from "react-datepicker"; // Importa o DatePicker
+import "react-datepicker/dist/react-datepicker.css"; // Estilos padrão do DatePicker
+import "./style.css";
 
 const API_URL = "https://arearestritaevangelizar.belogic.com.br/api";
 
 const AddJornal = () => {
   const [lancamento, setLancamento] = useState("");
   const [edicao, setEdicao] = useState("");
-  const [dataPublicacao, setDataPublicacao] = useState("");
+  const [dataPublicacao, setDataPublicacao] = useState(new Date()); // Estado para a data de publicação
   const [imagemCapa, setImagemCapa] = useState(null);
   const [arquivoImagens, setArquivoImagens] = useState(null);
   const [edicaoGratuita, setEdicaoGratuita] = useState(false);
@@ -22,7 +24,7 @@ const AddJornal = () => {
     const file = e.target.files[0];
 
     try {
-      setArquivoImagens(file); // Atualiza o estado com as URLs das imagens
+      setArquivoImagens(file);
     } catch (error) {
       console.error("Erro ao processar arquivo ZIP:", error);
     }
@@ -34,7 +36,10 @@ const AddJornal = () => {
     const formData = new FormData();
     formData.append("lancamento", lancamento);
     formData.append("edicao", edicao);
-    formData.append("data_publicacao", dataPublicacao);
+    formData.append(
+      "data_publicacao",
+      dataPublicacao.toISOString().split("T")[0] // Converte a data para o formato adequado
+    );
     formData.append("imagem_capa", imagemCapa);
     formData.append("arquivo", arquivoImagens);
     formData.append("edicao_gratuita_id", edicaoGratuita ? "true" : "false");
@@ -52,13 +57,12 @@ const AddJornal = () => {
       // Limpa os campos após o envio bem-sucedido
       setLancamento("");
       setEdicao("");
-      setDataPublicacao("");
+      setDataPublicacao(new Date()); // Reseta para a data atual
       setImagemCapa(null);
       setArquivoImagens(null);
       setEdicaoGratuita(false);
 
       alert("Jornal enviado com sucesso!");
-
     } catch (error) {
       console.error("Erro ao enviar jornal:", error);
       if (error.response) {
@@ -70,71 +74,76 @@ const AddJornal = () => {
 
   return (
     <div>
-    <Nav />
-    <div className="jornal-main">
-      <h2 className="jornal-h2">Enviar Jornal</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="inputs-jornal">
-          <label htmlFor="lancamento">Lançamento:</label>
-          <input
-            type="text"
-            id="lancamento"
-            value={lancamento}
-            onChange={(e) => setLancamento(e.target.value)}
-            required
-          />
-        </div>
-        <div className="inputs-jornal">
-          <label htmlFor="edicao">Edição:</label>
-          <input
-            type="text"
-            id="edicao"
-            value={edicao}
-            onChange={(e) => setEdicao(e.target.value)}
-            required
-          />
-        </div>
-        <div className="inputs-jornal">
-          <label htmlFor="dataPublicacao">Data de Publicação:</label>
-          <input
-            type="text"
-            id="dataPublicacao"
-            value={dataPublicacao}
-            onChange={(e) => setDataPublicacao(e.target.value)}
-            required
-          />
-        </div>
-        <div className="inputs-jornal">
-          <label htmlFor="imagemCapa">Imagem de Capa:</label>
-          <input
-            type="file"
-            id="imagemCapa"
-            onChange={handleImagemCapaChange}
-            accept="image/jpeg,image/png"
-          />
-        </div>
-        <div className="inputs-jornal">
-          <label htmlFor="arquivoImagens">Arquivo de Imagens (ZIP):</label>
-          <input
-            type="file"
-            id="arquivoImagens"
-            onChange={handleArquivoImagensChange}
-            accept=".zip"
-          />
-        </div>
-        <div>
-          <label htmlFor="edicaoGratuita">Edição Gratuita (marque esse campo apenas se a afirmação for positiva): </label>
-          <input
-            type="checkbox"
-            id="edicaoGratuita"
-            checked={edicaoGratuita}
-            onChange={(e) => setEdicaoGratuita(e.target.checked)}
-          />
-        </div>
-        <button className="jornal-btn" type="submit">Enviar Jornal</button>
-      </form>
-    </div>
-    <Rodape />
+      <Nav />
+      <div className="jornal-main">
+        <h2 className="jornal-h2">Enviar Jornal</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="inputs-jornal">
+            <label htmlFor="lancamento">Lançamento:</label>
+            <input
+              type="text"
+              id="lancamento"
+              value={lancamento}
+              onChange={(e) => setLancamento(e.target.value)}
+              required
+            />
+          </div>
+          <div className="inputs-jornal">
+            <label htmlFor="edicao">Edição:</label>
+            <input
+              type="text"
+              id="edicao"
+              value={edicao}
+              onChange={(e) => setEdicao(e.target.value)}
+              required
+            />
+          </div>
+          <div className="inputs-jornal">
+            <label htmlFor="dataPublicacao">Data de Publicação:</label>
+            <br />
+            <DatePicker
+              selected={dataPublicacao}
+              onChange={(date) => setDataPublicacao(date)}
+              dateFormat="dd/MM/yyyy"
+              className="input-date"
+            />
+          </div>
+          <div className="inputs-jornal">
+            <label htmlFor="imagemCapa">Imagem de Capa:</label>
+            <input
+              type="file"
+              id="imagemCapa"
+              onChange={handleImagemCapaChange}
+              accept="image/jpeg,image/png"
+            />
+          </div>
+          <div className="inputs-jornal">
+            <label htmlFor="arquivoImagens">Arquivo de Imagens (ZIP):</label>
+            <input
+              type="file"
+              id="arquivoImagens"
+              onChange={handleArquivoImagensChange}
+              accept=".zip"
+            />
+          </div>
+          <div>
+            <label htmlFor="edicaoGratuita">
+              Edição Gratuita (marque esse campo apenas se a afirmação for
+              positiva):
+            </label>
+            <input
+              type="checkbox"
+              id="edicaoGratuita"
+              checked={edicaoGratuita}
+              onChange={(e) => setEdicaoGratuita(e.target.checked)}
+            />
+          </div>
+          <button className="jornal-btn" type="submit">
+            Enviar Jornal
+          </button>
+        </form>
+      </div>
+      <Rodape />
     </div>
   );
 };

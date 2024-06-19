@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import Nav from "../../components/Nav/Nav";
 import Rodape from "../../components/Rodape/Rodape";
-import "../AddJornal/style.css"
+import DatePicker from "react-datepicker"; // Importa o DatePicker
+import "react-datepicker/dist/react-datepicker.css"; // Estilos padrão do DatePicker
+import "../AddJornal/style.css";
 
 const API_URL = "https://arearestritaevangelizar.belogic.com.br/api";
 
 const AddRevista = () => {
   const [lancamento, setLancamento] = useState("");
   const [edicao, setEdicao] = useState("");
-  const [dataPublicacao, setDataPublicacao] = useState("");
+  const [dataPublicacao, setDataPublicacao] = useState(new Date()); // Estado para a data de publicação
   const [imagemCapa, setImagemCapa] = useState(null);
   const [arquivoImagens, setArquivoImagens] = useState(null);
   const [edicaoGratuita, setEdicaoGratuita] = useState(false);
@@ -34,7 +36,10 @@ const AddRevista = () => {
     const formData = new FormData();
     formData.append("lancamento", lancamento);
     formData.append("edicao", edicao);
-    formData.append("data_publicacao", dataPublicacao);
+    formData.append(
+      "data_publicacao",
+      dataPublicacao.toISOString().split("T")[0] // Converte a data para o formato adequado
+    );
     formData.append("imagem_capa", imagemCapa);
     formData.append("arquivo", arquivoImagens);
     formData.append("edicao_gratuita_id", edicaoGratuita ? "true" : "false");
@@ -52,7 +57,7 @@ const AddRevista = () => {
       // Limpa os campos após o envio bem-sucedido
       setLancamento("");
       setEdicao("");
-      setDataPublicacao("");
+      setDataPublicacao(new Date()); // Reseta para a data atual
       setImagemCapa(null);
       setArquivoImagens(null);
       setEdicaoGratuita(false);
@@ -96,12 +101,12 @@ const AddRevista = () => {
           </div>
           <div className="inputs-jornal">
             <label htmlFor="dataPublicacao">Data de Publicação:</label>
-            <input
-              type="text"
-              id="dataPublicacao"
-              value={dataPublicacao}
-              onChange={(e) => setDataPublicacao(e.target.value)}
-              required
+            <br />
+            <DatePicker
+              selected={dataPublicacao}
+              onChange={(date) => setDataPublicacao(date)}
+              dateFormat="dd/MM/yyyy"
+              className="input-date"
             />
           </div>
           <div className="inputs-jornal">
