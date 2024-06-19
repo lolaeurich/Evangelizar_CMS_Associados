@@ -8,7 +8,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    row-gap: 25px;
+    row-gap: 15px;
 }
 
 .add-jornal {
@@ -30,11 +30,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    row-gap: 25px;
+    row-gap: 15px;
 }
 
 .jornal-h2 {
-    font-size: 32px;
+    font-size: 24px;
     color: #38603D;
 }
 
@@ -45,16 +45,20 @@
 }
 
 .inputs-jornal input {
-    height: 32px;
+    height: 28px;
     border-radius: 5px;
     padding: 5px;
 }
 
 .inputs-jornal label {
-   font-size: 18px;
+   font-size: 16px;
 }
 
 .jornal-btn {
     border: 1px solid #38603D;
     margin-top: 10px;
+}
+
+.input-check {
+    margin-left: 10px !important;
 }

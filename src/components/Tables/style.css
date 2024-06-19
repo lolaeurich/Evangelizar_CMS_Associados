@@ -23,7 +23,7 @@
 }
 
 .table td {
-    font-size: 11px;
+    font-size: 9px;
 }
 
 .table tbody tr:nth-child(even) {
@@ -35,14 +35,14 @@
 }
 
 .export-button {
-    width: 220px;
-    height: 44px;
-    border: solid 1px green;
-    align-self: end;
-    margin-top: 200px;
-    margin-right: 15px;
-    cursor: pointer;
-    position: static;
+  width: 150px;
+  height: 32px;
+  border: solid 1px green;
+  align-self: center;
+  /* margin-top: 162px; */
+  margin-right: 0px;
+  cursor: pointer;
+  font-size: 12px;
 }
 
 .export-button:hover {
@@ -52,10 +52,28 @@
 
 .filtros {
   display: flex;
-  flex-direction: column;
   height: 25px;
   margin-bottom: 15px;
   margin-top: 15px;
-  column-gap: 15px;
+  column-gap: 12px;
   row-gap: 10px;
+}
+
+.nav-table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.limpar-filtros {
+  height: 22px !important;
+  font-size: 11px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.limpar-filtros:hover {
+  background-color: #38603D;
+  color: #fff;
+  border: 1px solid #38603D;
 }

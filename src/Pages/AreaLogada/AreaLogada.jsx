@@ -3,6 +3,10 @@ import "./style.css";
 import Rodape from "../../components/Rodape/Rodape";
 import Nav from "../../components/Nav/Nav";
 import Chart from 'chart.js/auto';
+import vela from "../../assets/vela-amarela.png"
+import Testemunho from "../../assets/testemunho.png"
+import jornal from "../../assets/jornal.png"
+import revista from "../../assets/revista-amarela.png"
 
 import { useNavigate } from "react-router-dom";
 
@@ -39,15 +43,19 @@ function AreaLogada () {
                 <h3 className="areaLogada-h3">Bem-vindo ao CMS Evangelizar! Selecione a opção desejada:</h3>
                 <div className="opcoes-container">
                     <div className="opcao" onClick={routeChangeVelas}>
+                    <img alt="" src={vela} style={{width: "30px", height: "30px"}}></img>
                         <h4>Velas</h4>
                     </div>
                     <div className="opcao" onClick={routeChangeTest}>
+                        <img alt="" src={Testemunho} style={{width: "30px", height: "30px"}}></img>
                         <h4>Testemunhos</h4>
                     </div>
                     <div className="opcao" onClick={routeChangeRevista}>
+                        <img alt="" src={revista} style={{width: "30px", height: "30px"}}></img>
                         <h4>Revistas</h4>
                     </div>
                     <div className="opcao" onClick={routeChangeJornal}>
+                        <img alt="" src={jornal} style={{width: "30px", height: "30px"}}></img>
                         <h4>Jornais</h4>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import Nav from "../../components/Nav/Nav";
 import Rodape from "../../components/Rodape/Rodape";
 import DatePicker from "react-datepicker"; // Importa o DatePicker
 import "react-datepicker/dist/react-datepicker.css"; // Estilos padrão do DatePicker
-import "./style.css";
+import "../AddJornal/style.css";
 
 const API_URL = "https://arearestritaevangelizar.belogic.com.br/api";
 
@@ -63,12 +63,13 @@ const AddJornal = () => {
       setEdicaoGratuita(false);
 
       alert("Jornal enviado com sucesso!");
+
     } catch (error) {
-      console.error("Erro ao enviar jornal:", error);
+      console.error("Erro ao enviar revista:", error);
       if (error.response) {
         console.error("Detalhes do erro:", error.response.data);
       }
-      alert("Erro ao enviar jornal. Verifique os detalhes no console.");
+      alert("Erro ao enviar revista. Verifique os detalhes no console.");
     }
   };
 
@@ -128,8 +129,7 @@ const AddJornal = () => {
           </div>
           <div>
             <label htmlFor="edicaoGratuita">
-              Edição Gratuita (marque esse campo apenas se a afirmação for
-              positiva):
+              Edição Gratuita (marque esse campo apenas se a afirmação for positiva):
             </label>
             <input
               type="checkbox"
@@ -139,7 +139,7 @@ const AddJornal = () => {
             />
           </div>
           <button className="jornal-btn" type="submit">
-            Enviar Jornal
+            Enviar Revista
           </button>
         </form>
       </div>

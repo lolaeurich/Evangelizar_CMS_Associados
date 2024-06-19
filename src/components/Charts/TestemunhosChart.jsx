@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import "./style.css"
 import { Pie } from 'react-chartjs-2';
-import { TestemunhosContext } from "../Contexts/TestemunhosContext";
+import { TestemunhosContext } from "../Contexts/TestemunhosContext.jsx"
 
 const ChartComponentTest = () => {
   const { testemunhos } = useContext(TestemunhosContext); // Consumindo o contexto de Velas
 
   // Estado local para armazenar dados do gráfico
   const [chartData, setChartData] = useState({
-    labels: ['Testemunhos ativos', 'Testemunhos inativos'], // Rótulos para as fatias da pizza
+    labels: ['Testemunho ativo', 'Testemunho inativo'], // Rótulos para as fatias da pizza
     datasets: [
       {
         label: 'Número de Testemunhos',
@@ -67,7 +67,7 @@ const ChartComponentTest = () => {
         ],
       });
     } catch (error) {
-      console.error('Erro ao buscar dados de velas:', error);
+      console.error('Erro ao buscar dados de testemunhos:', error);
       // Trate o erro conforme necessário (ex.: exibir mensagem de erro)
     }
   };
@@ -80,8 +80,8 @@ const ChartComponentTest = () => {
   // Renderiza o componente Pie com os dados dinâmicos
   return (
     <div className='status-velas'>
-      <Pie data={chartData} options={chartData.options} style={{    height: "328px",
-    width: "304px"}}/>
+      <h2 className='status-velas-h2'>Status de Testemunhos</h2>
+      <Pie data={chartData} options={chartData.options} />
     </div>
   );
 };

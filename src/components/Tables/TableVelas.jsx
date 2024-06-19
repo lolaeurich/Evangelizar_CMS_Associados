@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './style.css';
 import XLSX from 'xlsx/dist/xlsx.full.min.js';
@@ -9,9 +9,13 @@ const TabelaVelas = () => {
   const [loading, setLoading] = useState(true);
   const [filtros, setFiltros] = useState([]);
   const [cidadeFiltro, setCidadeFiltro] = useState('');
+  const [motivos, setMotivos] = useState([]);
+  const [filtroMotivo, setFiltroMotivo] = useState('');
+  const [filtroTitulo, setFiltroTitulo] = useState('');
 
   useEffect(() => {
     fetchVelasData();
+    fetchMotivos();
   }, []);
 
   const fetchVelasData = async () => {
@@ -34,6 +38,34 @@ const TabelaVelas = () => {
     }
   };
 
+  const fetchMotivos = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('https://arearestritaevangelizar.belogic.com.br/api/vela/motivos', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      console.log('Resposta da API de motivos:', response);
+  
+      if (!response || response.status !== 200) {
+        throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+      }
+  
+      if (!response.data || !Array.isArray(response.data.data)) {
+        throw new Error('Dados inválidos recebidos da API de motivos');
+      }
+  
+      // Mapeia os motivos para um array contendo apenas os nomes
+      const nomesMotivos = response.data.data.map(motivo => motivo.nome);
+      setMotivos(nomesMotivos);
+    } catch (error) {
+      console.error('Erro ao buscar motivos:', error.message);
+      // Tratamento de erro adequado aqui
+    }
+  };
+
   const handleFilterChange = (filtro) => {
     const index = filtros.findIndex(f => f.campo === filtro.campo);
     if (index === -1) {
@@ -50,9 +82,21 @@ const TabelaVelas = () => {
     handleFilterChange({ campo: 'cidade', valor: cidade });
   };
 
+  const handleMotivoFilterChange = (motivo) => {
+    setFiltroMotivo(motivo);
+    handleFilterChange({ campo: 'motivo', valor: motivo });
+  };
+
+  const handleTituloFilterChange = (titulo) => {
+    setFiltroTitulo(titulo);
+    handleFilterChange({ campo: 'titulo', valor: titulo });
+  };
+
   const clearFilters = () => {
     setFiltros([]);
     setCidadeFiltro('');
+    setFiltroMotivo('');
+    setFiltroTitulo('');
   };
 
   const applyFilters = (data) => {
@@ -60,6 +104,10 @@ const TabelaVelas = () => {
       return filtros.every(filtro => {
         if (filtro.campo === 'cidade') {
           return item.cidade.toLowerCase().includes(filtro.valor.toLowerCase());
+        } else if (filtro.campo === 'motivo') {
+          return item.motivo.toLowerCase() === filtro.valor.toLowerCase();
+        } else if (filtro.campo === 'titulo') {
+          return item.titulo.toLowerCase().includes(filtro.valor.toLowerCase());
         }
         return item[filtro.campo].toLowerCase().includes(filtro.valor.toLowerCase());
       });
@@ -81,7 +129,33 @@ const TabelaVelas = () => {
 
   return (
     <div className='velas-excel'>
-      <h2 className='tabela-velas-h2'>Lista de Velas</h2>
+      <div className='nav-table'>
+        <h2 className='tabela-velas-h2'>Lista de Velas</h2>
+        <div className='filtros'>
+          <input
+            type="text"
+            placeholder="Filtrar por título"
+            value={filtroTitulo}
+            onChange={(e) => handleTituloFilterChange(e.target.value)}
+          />
+          <select
+            value={filtroMotivo}
+            onChange={(e) => handleMotivoFilterChange(e.target.value)}
+          >
+            <option value="">Filtrar por motivo</option>
+            {motivos.map((motivo, index) => (
+              <option key={index} value={motivo}>
+                {motivo}
+              </option>
+            ))}
+          </select>
+          <CitiesDropdown onSelectCity={handleCityFilterChange} />
+          <button className='limpar-filtros' onClick={clearFilters} style={{ height: "33px", border: "solid 1px #000", textAlign: "center" }}>Limpar Filtros</button>
+        </div>
+        <button className='export-button' onClick={exportToExcel}>
+          Exportar para Excel
+        </button>
+      </div>
       <div className='tabela-scroll'>
         <table className='table'>
           <thead>
@@ -114,9 +188,6 @@ const TabelaVelas = () => {
           </tbody>
         </table>
       </div>
-      <button className='export-button' onClick={exportToExcel}>
-        Exportar para Excel
-      </button>
     </div>
   );
 };
