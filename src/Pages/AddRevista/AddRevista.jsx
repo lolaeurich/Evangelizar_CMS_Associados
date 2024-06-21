@@ -77,10 +77,11 @@ const AddRevista = () => {
     <div>
       <Nav />
       <div className="jornal-main">
+      <div className="container-edit">
         <h2 className="jornal-h2">Enviar Revista</h2>
         <form onSubmit={handleSubmit}>
           <div className="inputs-jornal">
-            <label htmlFor="lancamento">Lançamento:</label>
+            <label htmlFor="lancamento">Título:</label>
             <input
               type="text"
               id="lancamento"
@@ -100,7 +101,7 @@ const AddRevista = () => {
             />
           </div>
           <div className="inputs-jornal">
-            <label htmlFor="dataPublicacao">Data de Publicação:</label>
+            <label htmlFor="dataPublicacao" style={{marginBottom: "-15px"}}>Data de Publicação:</label>
             <br />
             <DatePicker
               selected={dataPublicacao}
@@ -128,8 +129,8 @@ const AddRevista = () => {
             />
           </div>
           <div>
-            <label htmlFor="edicaoGratuita">
-              Edição Gratuita (marque esse campo apenas se a afirmação for positiva):
+            <label htmlFor="edicaoGratuita" style={{fontWeight: "bold", marginRight: "10px"}}>
+              Edição em destaque <span style={{fontWeight: "normal"}}>(marque esse campo apenas se essa for a edição em destaque da página)</span>:
             </label>
             <input
               type="checkbox"
@@ -142,6 +143,7 @@ const AddRevista = () => {
             Enviar Revista
           </button>
         </form>
+      </div>
       </div>
       <Rodape />
     </div>

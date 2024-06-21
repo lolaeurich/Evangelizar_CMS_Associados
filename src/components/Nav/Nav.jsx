@@ -1,11 +1,20 @@
 import React from "react";
 import "./style.css";
 import logoNav from "../../assets/logo2.png";
+import logout from "../../assets/logout.png";
 import axios from 'axios';
 
+import { useNavigate } from "react-router-dom";
+
 function Nav() {
+    let navigateHome = useNavigate(); 
+    const routeChangeHome = () =>{ 
+      let path = `/AreaLogada`; 
+      navigateHome(path);
+    }
 
     const handleLogout = async () => {
+        
         try {
             // Limpar cookies de autenticação
             document.cookie = 'usuLogado=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -36,8 +45,9 @@ function Nav() {
 
     return (
         <div className="nav">
-            <img alt="" className="logo-nav" src={logoNav} />
+            <img alt="" className="logo-nav" src={logoNav} onClick={routeChangeHome}/>
             <div className="btn-nav">
+                <img alt="" src={logout} style={{width: "25px", height: "25px"}}/>
                 <p onClick={handleLogout}>Logout</p>
             </div>
         </div>

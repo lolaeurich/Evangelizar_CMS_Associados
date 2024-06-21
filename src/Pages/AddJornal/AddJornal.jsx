@@ -77,59 +77,60 @@ const AddJornal = () => {
     <div>
       <Nav />
       <div className="jornal-main">
-        <h2 className="jornal-h2">Enviar Jornal</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="inputs-jornal">
-            <label htmlFor="lancamento">Lançamento:</label>
-            <input
-              type="text"
-              id="lancamento"
-              value={lancamento}
-              onChange={(e) => setLancamento(e.target.value)}
-              required
-            />
-          </div>
-          <div className="inputs-jornal">
-            <label htmlFor="edicao">Edição:</label>
-            <input
-              type="text"
-              id="edicao"
-              value={edicao}
-              onChange={(e) => setEdicao(e.target.value)}
-              required
-            />
-          </div>
-          <div className="inputs-jornal">
-            <label htmlFor="dataPublicacao">Data de Publicação:</label>
-            <br />
-            <DatePicker
-              selected={dataPublicacao}
-              onChange={(date) => setDataPublicacao(date)}
-              dateFormat="dd/MM/yyyy"
-              className="input-date"
-            />
-          </div>
-          <div className="inputs-jornal">
-            <label htmlFor="imagemCapa">Imagem de Capa:</label>
-            <input
-              type="file"
-              id="imagemCapa"
-              onChange={handleImagemCapaChange}
-              accept="image/jpeg,image/png"
-            />
-          </div>
-          <div className="inputs-jornal">
-            <label htmlFor="arquivoImagens">Arquivo de Imagens (ZIP):</label>
-            <input
-              type="file"
-              id="arquivoImagens"
-              onChange={handleArquivoImagensChange}
-              accept=".zip"
-            />
-          </div>
-          <div>
-            <label htmlFor="edicaoGratuita">
-              Edição Gratuita (marque esse campo apenas se a afirmação for positiva):
+        <div className="container-edit">
+          <h2 className="jornal-h2">Enviar Jornal</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="inputs-jornal">
+              <label htmlFor="lancamento">Título:</label>
+              <input
+                type="text"
+                id="lancamento"
+                value={lancamento}
+                onChange={(e) => setLancamento(e.target.value)}
+                required
+              />
+            </div>
+            <div className="inputs-jornal">
+              <label htmlFor="edicao">Edição:</label>
+              <input
+                type="text"
+                id="edicao"
+                value={edicao}
+                onChange={(e) => setEdicao(e.target.value)}
+                required
+              />
+            </div>
+            <div className="inputs-jornal">
+              <label htmlFor="dataPublicacao" style={{marginBottom: "-15px"}}>Data de Publicação:</label>
+              <br />
+              <DatePicker
+                selected={dataPublicacao}
+                onChange={(date) => setDataPublicacao(date)}
+                dateFormat="dd/MM/yyyy"
+                className="input-date"
+              />
+            </div>
+            <div className="inputs-jornal">
+              <label htmlFor="imagemCapa">Imagem de Capa:</label>
+              <input
+                type="file"
+                id="imagemCapa"
+                onChange={handleImagemCapaChange}
+                accept="image/jpeg,image/png"
+              />
+            </div>
+            <div className="inputs-jornal">
+              <label htmlFor="arquivoImagens">Arquivo de Imagens (ZIP):</label>
+              <input
+                type="file"
+                id="arquivoImagens"
+                onChange={handleArquivoImagensChange}
+                accept=".zip"
+              />
+            </div>
+            <div>
+            <label htmlFor="edicaoGratuita" style={{fontWeight: "bold", marginRight: "10px"}}>
+              Edição em destaque <span style={{fontWeight: "normal"}}>(marque esse campo apenas se essa for a edição em destaque da página)</span>:
             </label>
             <input
               type="checkbox"
@@ -138,10 +139,11 @@ const AddJornal = () => {
               onChange={(e) => setEdicaoGratuita(e.target.checked)}
             />
           </div>
-          <button className="jornal-btn" type="submit">
-            Enviar Revista
-          </button>
-        </form>
+            <button className="jornal-btn" type="submit">
+              Enviar Revista
+            </button>
+          </form>
+        </div>
       </div>
       <Rodape />
     </div>

@@ -76,6 +76,8 @@ html, body {
     border: none;
     background-color: #E1E4F0;
     margin-bottom: 10px;
+    background-color: #f0f0f0;
+    position: relative;
 }
 
 .btn-login {
@@ -85,3 +87,19 @@ html, body {
     font-size: 18px;
     font-weight: bold;
 }
+
+.eye-input {
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  .eye-icon:hover {
+    opacity: 0.7; /* Opacidade reduzida quando o mouse passa por cima */
+  }

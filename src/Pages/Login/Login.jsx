@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Rodape from '../../components/Rodape/Rodape';
 import logo from "../../assets/logo.svg";
+import eye from "../../assets/eye.png";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +10,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -22,13 +24,14 @@ function Login() {
       const response = await axios.post('https://arearestritaevangelizar.belogic.com.br/api/login', {
         email: email,
         password: password,
-        associado: false
+        associado: false, 
+        tipo: 1
       });
   
       if (response.status === 200) {
         const token = response.data.authorization.token;
         localStorage.setItem('token', token);
-        navigate('/AreaLogada');
+        navigate('/PaginaInicial');
       } else {
         setError("Login ou senha incorretos!");
       }
@@ -37,6 +40,11 @@ function Login() {
       setError("Erro ao fazer login. Verifique os detalhes no console.");
     }
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }; 
+
   return (
     <div>
       {/* Formulário de login */}
@@ -44,10 +52,16 @@ function Login() {
         <div className='login'>
           <img alt='' className='login-logo' src={logo} />
           <div className='inputs'>
-            <label className='label-login'>E-mail</label>
+            <label className='label-login'>Login</label>
             <input className='input-login' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
             <label className='label-login'>Senha</label>
-            <input className='input-login' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+            <div className='eye-input'>
+              <input className='input-login' type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
+              <img  className="eye-icon"
+                alt="Toggle Password Visibility"
+                src={eye}
+                onClick={togglePasswordVisibility} />
+            </div>
           </div>
           <button className="btn-login" onClick={handleLogin}>
             <span>Entrar</span>

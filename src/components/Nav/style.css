@@ -13,12 +13,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 70px;
+    width: 80px;
     background-color: #fff;
     color: #38603D;
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
+    column-gap: 5px;
 }
 
 .btn-nav:hover {
@@ -35,6 +36,7 @@
     .logo-nav {
         width: 48px;
         height: 39px;
+        column-gap: 5px;
     }
 }
 
@@ -50,7 +52,7 @@
     }
 
     .btn-nav {
-        width: 90px;
+        width: 100px;
         height: 35px;
         text-align: center;
         font-size: 18px;
