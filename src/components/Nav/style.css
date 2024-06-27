@@ -13,7 +13,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
+    width: 50px;
+    height: 40px;
     background-color: #fff;
     color: #38603D;
     border-radius: 5px;
@@ -26,6 +27,29 @@
     background-color: #38603D;
     color: #fff;
     border: solid 1px #fff;
+}
+
+.user2 {
+    display: flex;
+    align-items:flex-end;
+    column-gap: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.user2:hover {
+    color: #FFBF00;
+}
+
+.user2 img {
+    width: 40px;
+    height: 40px;
+}
+
+.nav-botoes {
+    display: flex;
+    column-gap: 70px;
+    align-items: center;
 }
 
 @media screen and (min-width: 1300px) {
@@ -52,9 +76,10 @@
     }
 
     .btn-nav {
-        width: 100px;
-        height: 35px;
+        width: 60px;
+        height: 40px;
         text-align: center;
         font-size: 18px;
+        column-gap: 10px;
     }
 }

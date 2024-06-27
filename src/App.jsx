@@ -6,13 +6,15 @@ import Velas from './Pages/Velas/Velas';
 import Testemunhos from './Pages/Testemunhos/Testemunhos';
 import AddJornal from './Pages/AddJornal/AddJornal';
 import AddRevista from './Pages/AddRevista/AddRevista';
-import PaginaInicial from './Pages/PaginaInicial/PaginaInicial';
+// import PaginaInicial from './Pages/PaginaInicial/PaginaInicial';
+import NovoUser from './Pages/NovoUser/NovoUser';
 
 const App = () => {
   return (
     <Routes>
      <Route path="/" element={<Login />}/>
-     <Route path="/PaginaInicial" element={<PaginaInicial />}/>
+     {/* <Route path="/PaginaInicial" element={<PaginaInicial />}/> */}
+     <Route path="/NovoUser" element={<NovoUser />}/>
      <Route path="/AreaLogada" element={<AreaLogada/>}/>
      <Route path="/Velas" element={<Velas/>}/>
      <Route path="/Testemunhos" element={<Testemunhos/>}/>

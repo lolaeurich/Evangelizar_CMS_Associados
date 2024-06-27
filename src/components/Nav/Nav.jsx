@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 import logoNav from "../../assets/logo2.png";
 import logout from "../../assets/logout.png";
+import user2 from "../../assets/user3.png";
 import axios from 'axios';
 
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,12 @@ function Nav() {
     const routeChangeHome = () =>{ 
       let path = `/AreaLogada`; 
       navigateHome(path);
+    }
+
+    let navigateNovoUser = useNavigate(); 
+    const routeChangeNovoUser = () =>{ 
+      let path = `/NovoUser`; 
+      navigateNovoUser(path);
     }
 
     const handleLogout = async () => {
@@ -46,10 +53,15 @@ function Nav() {
     return (
         <div className="nav">
             <img alt="" className="logo-nav" src={logoNav} onClick={routeChangeHome}/>
-            <div className="btn-nav">
-                <img alt="" src={logout} style={{width: "25px", height: "25px"}}/>
-                <p onClick={handleLogout}>Logout</p>
-            </div>
+            <div className="nav-botoes">
+                <div className="user2">
+                    <img alt="" src={user2} />
+                    <p onClick={routeChangeNovoUser}>Novo usuário</p>
+                </div>
+                <div className="btn-nav">
+                    <img alt="" src={logout} style={{width: "25px", height: "25px"}}/>
+                </div>
+            </div>    
         </div>
     );
 }

@@ -31,7 +31,7 @@ function Login() {
       if (response.status === 200) {
         const token = response.data.authorization.token;
         localStorage.setItem('token', token);
-        navigate('/PaginaInicial');
+        navigate('/areaLogada');
       } else {
         setError("Login ou senha incorretos!");
       }

@@ -36,7 +36,7 @@ function PaginaInicial() {
                     </div>
                     <div className="opcao-inicial" onClick={routeChangeRestrita}>
                         <img alt="" src={user} style={{width: "50px", height: "50px", paddingRight: "10px"}}></img>
-                        <h4>CMS ÁREA RESTRITA + USUÁRIO</h4>
+                        <h4>CMS ÁREA RESTRITA</h4>
                     </div>
                 </div>
             </div>
